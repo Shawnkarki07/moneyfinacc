@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoneyFinAcc — Get organized. Stay a step ahead.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0a1420; overflow-x: hidden; }
+  a { color: #eef2f6; text-decoration: none; }
+  a { position: relative; }
+  a:not(.btn)::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -2px; height: 1px; background: #c9a24b; transition: right 260ms cubic-bezier(0.2,0.8,0.25,1); }
+  a:not(.btn):hover::after { right: 0; }
+  a:hover { color: #c9a24b; }
+  ::selection { background: #1c3a54; }
+
+  .btn {
+    position: relative; overflow: hidden;
+    transition: transform 220ms cubic-bezier(0.2,0.8,0.25,1), box-shadow 220ms ease, border-color 220ms ease;
+  }
+  .btn::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(120deg, #e9c876, #c9a24b 45%, #e9c876);
+    opacity: 0; transition: opacity 220ms ease;
+  }
+  .btn span { position: relative; z-index: 1; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -14px rgba(201,162,75,0.55); }
+  .btn:hover::before { opacity: 1; }
+  .btn:active { transform: translateY(0); }
+
+  input:focus { outline: none; }
+  .field:focus-within { border-color: #c9a24b !important; box-shadow: 0 0 0 3px rgba(201,162,75,0.14), 0 14px 30px -26px rgba(0,0,0,0.6) !important; }
+
+  /* ---------- ambient background ---------- */
+  @keyframes mf-drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(4%, -6%) scale(1.08); } }
+  @keyframes mf-drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-5%, 5%) scale(1.1); } }
+  @keyframes mf-grid-pan { from { background-position: 0 0; } to { background-position: 68px 68px; } }
+  .orb1 { animation: mf-drift1 16s ease-in-out infinite; }
+  .orb2 { animation: mf-drift2 20s ease-in-out infinite; }
+  .grid-layer { animation: mf-grid-pan 40s linear infinite; }
+
+  /* ---------- entrance choreography ---------- */
+  @keyframes mf-in { from { opacity: 0; transform: translateY(22px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+  @keyframes mf-in-side { from { opacity: 0; transform: translateX(28px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes mf-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .in-1  { animation: mf-in 900ms cubic-bezier(0.2,0.8,0.25,1) 0.05s both; }
+  .in-2  { animation: mf-in 900ms cubic-bezier(0.2,0.8,0.25,1) 0.18s both; }
+  .in-3  { animation: mf-in 900ms cubic-bezier(0.2,0.8,0.25,1) 0.32s both; }
+  .in-4  { animation: mf-in 900ms cubic-bezier(0.2,0.8,0.25,1) 0.46s both; }
+  .in-5  { animation: mf-in 900ms cubic-bezier(0.2,0.8,0.25,1) 0.58s both; }
+  .in-card { animation: mf-in-side 1100ms cubic-bezier(0.16,0.84,0.24,1) 0.4s both; }
+
+  /* emphasised word in the headline */
+  .shine {
+    color: #c9a24b;
+    text-shadow: 0 0 24px rgba(201,162,75,0.35);
+  }
+
+  /* rule under eyebrow draws in then glows */
+  @keyframes mf-draw { from { width: 0; } to { width: 100%; } }
+  @keyframes mf-draw-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* card float + glow pulse */
+  @keyframes mf-float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(0.4deg); } }
+  @keyframes mf-glow { 0%,100% { opacity: 0.45; } 50% { opacity: 0.85; } }
+  .card-float { animation: mf-float 6.5s ease-in-out infinite; }
+  .card-glow { animation: mf-glow 4s ease-in-out infinite; }
+
+  @keyframes mf-sweep { 0% { transform: translateX(-130%) skewX(-12deg); } 45%, 100% { transform: translateX(340%) skewX(-12deg); } }
+  .sweep { animation: mf-sweep 5s ease-in-out 1.6s infinite; }
+
+  @keyframes mf-rise { 0% { transform: scaleY(0.1); } 100% { transform: scaleY(1); } }
+  .bar { transform-origin: bottom; animation: mf-rise 1100ms cubic-bezier(0.2,0.8,0.25,1) both; }
+  @keyframes mf-row-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+  .row-in { animation: mf-row-in 600ms cubic-bezier(0.2,0.8,0.25,1) both; }
+
+  @keyframes mf-pulse { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+  .pulse-dot { animation: mf-pulse 2s ease-in-out infinite; }
+  .pulse-ring { animation: mf-ring 2s ease-out infinite; }
+  @keyframes mf-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.6); opacity: 0; } }
+
+  @keyframes mf-badge-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(1deg); } }
+  .badge-float { animation: mf-fade 700ms ease 1.15s both, mf-badge-float 5.5s ease-in-out 1.9s infinite; }
+
+  @keyframes mf-line-glow { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .line-glow { animation: mf-line-glow 3.2s ease-in-out infinite; }
+
+  @keyframes mf-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } 100% { opacity: 1; } }
+  .caret { animation: mf-blink 1s step-end infinite; }
+
+  .field-icon { transition: transform 220ms ease, color 220ms ease; }
+
+  @media (max-width: 860px) {
+    main { grid-template-columns: 1fr !important; }
+    .visual { order: -1; min-height: 360px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div style="position: relative; min-height: 100vh; background: #0a1420; color: #eef2f6; font-family: Inter, Helvetica, sans-serif; display: grid; grid-template-rows: auto 1fr auto; isolation: isolate;">
+
+  <!-- ambient layers -->
+  <div style="position: fixed; inset: 0; z-index: -3; background: radial-gradient(120% 90% at 12% 8%, #12233a 0%, #0a1420 55%), radial-gradient(90% 70% at 90% 100%, #102132 0%, #0a1420 60%);"></div>
+  <div class="grid-layer" style="position: fixed; inset: -68px; z-index: -2; background-image: linear-gradient(rgba(238,242,246,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(238,242,246,0.035) 1px, transparent 1px); background-size: 34px 34px;"></div>
+  <div class="orb1" style="position: fixed; top: -10%; left: -6%; width: 46vw; height: 46vw; max-width: 640px; max-height: 640px; border-radius: 50%; background: radial-gradient(circle, rgba(201,162,75,0.16), transparent 70%); z-index: -1; filter: blur(10px);"></div>
+  <div class="orb2" style="position: fixed; bottom: -14%; right: -8%; width: 50vw; height: 50vw; max-width: 700px; max-height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(28,58,84,0.55), transparent 70%); z-index: -1; filter: blur(10px);"></div>
+
+  <div style="padding: 0 clamp(24px, 6vw, 96px);">
+  <header class="in-1" style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 32px 0 0;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <img src="logo-icon.png" alt="MoneyFinAcc" style="height: 48px; width: 48px; display: block; border-radius: 50%; object-fit: cover; border: 1px solid #2a4a66; box-shadow: 0 0 0 4px rgba(238,242,246,0.03);" />
+      <span style="font-family: 'Fraunces', Georgia, serif; font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase;">MoneyFinAcc</span>
+    </div>
+    <span style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7c8ba0;">No app. No login. Just your sheet.</span>
+  </header>
+
+  <main class="main" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(40px, 8vw, 120px); align-items: center; padding: clamp(48px, 9vh, 110px) 0;">
+    <div style="max-width: 620px;">
+      <div class="in-1" style="display: inline-flex; align-items: center; gap: 9px; margin-bottom: 28px; padding: 9px 18px 9px 14px; border-radius: 999px; background: rgba(201,162,75,0.12); border: 1px solid rgba(201,162,75,0.4); box-shadow: 0 0 24px rgba(201,162,75,0.12);">
+        <span style="position: relative; width: 7px; height: 7px; flex-shrink: 0;">
+          <span class="pulse-ring" style="position: absolute; inset: 0; border-radius: 50%; background: #c9a24b;"></span>
+          <span class="pulse-dot" style="position: absolute; inset: 0; border-radius: 50%; background: #c9a24b; display: inline-block;"></span>
+        </span>
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #f3dfa4;">Coming Soon</span>
+      </div>
+
+      <h1 class="in-2" style="font-family: 'Fraunces', Georgia, serif; font-weight: 300; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.42; letter-spacing: -0.02em; margin: 0 0 20px; text-wrap: balance;">
+        Get organized.<br />Stay a <em class="shine" style="font-style: italic;">step ahead</em><span class="caret" style="color:#c9a24b; font-style: normal;">.</span>
+      </h1>
+
+      <p class="in-3" style="font-size: 17px; line-height: 1.65; color: #a9b6c7; max-width: 46ch; margin: 0 0 20px; text-wrap: pretty;">
+        You're good at what you do — spend your time there. MoneyFinAcc builds the
+        Google Sheet that keeps your business organized, structured and automated.
+        Delivered to your email. Yours for good. No new app to learn.
+      </p>
+
+      <div class="in-3" style="display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 40px;">
+        <span style="font-size: 12px; color: #8fa3b8; display: inline-flex; align-items: center; gap: 7px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #c9a24b; display: inline-block;"></span>0 new apps to learn</span>
+        <span style="font-size: 12px; color: #8fa3b8; display: inline-flex; align-items: center; gap: 7px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #c9a24b; display: inline-block;"></span>100% Google Sheets, yours to keep</span>
+        <span style="font-size: 12px; color: #8fa3b8; display: inline-flex; align-items: center; gap: 7px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #c9a24b; display: inline-block;"></span>48hr custom builds</span>
+      </div>
+
+      <form id="notify" class="in-4 field" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; max-width: 480px; padding: 8px; background: rgba(238,242,246,0.04); border: 1px solid #2a4a66; border-radius: 12px; box-shadow: 0 14px 30px -26px rgba(0,0,0,0.6); transition: border-color 220ms ease, box-shadow 220ms ease;">
+        <input type="email" id="email" required placeholder="your@email.com" aria-label="Email address" style="flex: 1 1 200px; min-width: 0; padding: 13px 14px; font-family: Inter, sans-serif; font-size: 15px; color: #eef2f6; background: transparent; border: 0; border-radius: 8px; outline: none;" />
+        <button type="submit" class="btn" style="padding: 13px 26px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #0e1b2b; background: #c9a24b; border: 1px solid #c9a24b; cursor: pointer;"><span>Notify me</span></button>
+      </form>
+      <p id="note" class="in-5" style="font-size: 13px; color: #7c8ba0; margin: 16px 0 0; min-height: 20px;">No noise. One note when we open.</p>
+    </div>
+
+    <div class="visual" style="position: relative; display: grid; place-items: center; width: 100%; min-height: min(60vh, 460px);">
+      <div class="card-glow" style="position: absolute; width: 78%; height: 62%; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(201,162,75,0.16), transparent 68%); filter: blur(2px);"></div>
+
+      <div class="in-card card-float" style="position: relative; width: min(360px, 88%); aspect-ratio: 4 / 5; border-radius: 16px; background: linear-gradient(160deg, #14263a, #0e1b2b); border: 1px solid #223f5a; box-shadow: 0 40px 80px -40px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.05); overflow: hidden; padding: clamp(18px, 3.4vw, 26px);">
+
+        <div class="sweep" style="position: absolute; top: 0; bottom: 0; left: 0; width: 24%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.07), transparent);"></div>
+
+        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px;">
+          <span style="font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #7c8ba0;">Cashflow Tracker</span>
+          <span style="position: relative; width: 6px; height: 6px;">
+            <span class="pulse-ring" style="position: absolute; inset: 0; border-radius: 50%; background: #4caf7d;"></span>
+            <span class="pulse-dot" style="position: absolute; inset: 0; border-radius: 50%; background: #4caf7d; display: inline-block;"></span>
+          </span>
+        </div>
+        <div style="font-family: ui-monospace, Menlo, monospace; font-size: 9px; letter-spacing: 0.05em; color: #5c6c80; margin-bottom: 14px;">This month's sales</div>
+        <div style="margin-bottom: 22px;">
+          <span style="font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: clamp(22px, 3.4vw, 28px); color: #eef2f6;">
+            Best month yet <span style="color: #c9a24b; font-style: normal;">★</span>
+          </span>
+        </div>
+
+        <div style="display: flex; align-items: flex-end; gap: clamp(8px, 1.6vw, 14px); height: 34%; padding-bottom: 8px; border-bottom: 1px solid #1c3349;">
+          <div class="bar" style="animation-delay: 0.5s; flex: 1; height: 42%; background: linear-gradient(180deg, #2a4a66, #1c3a54); border-radius: 3px 3px 0 0;"></div>
+          <div class="bar" style="animation-delay: 0.58s; flex: 1; height: 58%; background: linear-gradient(180deg, #2a4a66, #1c3a54); border-radius: 3px 3px 0 0;"></div>
+          <div class="bar" style="animation-delay: 0.66s; flex: 1; height: 50%; background: linear-gradient(180deg, #2a4a66, #1c3a54); border-radius: 3px 3px 0 0;"></div>
+          <div class="bar" style="animation-delay: 0.74s; flex: 1; height: 76%; background: linear-gradient(180deg, #2a4a66, #1c3a54); border-radius: 3px 3px 0 0;"></div>
+          <div class="bar" style="animation-delay: 0.82s; flex: 1; height: 66%; background: linear-gradient(180deg, #2a4a66, #1c3a54); border-radius: 3px 3px 0 0;"></div>
+          <div class="bar" style="animation-delay: 0.9s; flex: 1; height: 100%; background: linear-gradient(180deg, #e9c876, #c9a24b); border-radius: 3px 3px 0 0;"></div>
+        </div>
+        <div style="display: flex; gap: clamp(8px, 1.6vw, 14px); margin-top: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 9px; color: #5c6c80;">
+          <span style="flex: 1; text-align: center;">Jan</span>
+          <span style="flex: 1; text-align: center;">Feb</span>
+          <span style="flex: 1; text-align: center;">Mar</span>
+          <span style="flex: 1; text-align: center;">Apr</span>
+          <span style="flex: 1; text-align: center;">May</span>
+          <span style="flex: 1; text-align: center; color: #c9a24b;">Jun</span>
+        </div>
+
+        <div style="margin-top: 18px; padding: 11px 12px; border-radius: 8px; background: rgba(201,162,75,0.08); border: 1px solid rgba(201,162,75,0.25); font-size: 11.5px; line-height: 1.5; color: #d8c396; display: flex; gap: 9px;">
+          <span>⚡</span>
+          <span><strong style="color: #eef2f6; font-weight: 600;">Auto-flag:</strong> Branch 2 is running low — restock before the weekend rush.</span>
+        </div>
+      </div>
+
+      <div class="badge-float" style="position: absolute; right: -6%; bottom: -8%; display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border-radius: 12px; background: rgba(238,242,246,0.06); backdrop-filter: blur(6px); border: 1px solid #223f5a; box-shadow: 0 20px 34px -24px rgba(0,0,0,0.7); font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #a9b6c7;">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #c9a24b;"></span>Updates itself as you add rows
+      </div>
+    </div>
+  </main>
+
+  <footer class="in-5" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0 34px; border-top: 1px solid #223f5a; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7c8ba0;">
+    <a href="mailto:moneyfinacc@gmail.com" style="letter-spacing: 0.1em; text-transform: uppercase;">moneyfinacc@gmail.com</a>
+    <span style="letter-spacing: 0.1em; text-transform: uppercase;">Kathmandu, Nepal</span>
+  </footer>
+  </div>
+</div>
+<script>
+  var SIGNUP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbys8hfSRTUkubXAHb06zY0Lrpmm0qAmW62pmVU7J-Hj83rAJay8lFPo9uioPutR6en1/exec';
+
+  document.getElementById('notify').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var emailInput = document.getElementById('email');
+    var note = document.getElementById('note');
+    var button = e.target.querySelector('button[type="submit"]');
+    var email = emailInput.value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!ok) {
+      note.textContent = 'Please enter a valid email address.';
+      return;
+    }
+
+    button.disabled = true;
+    note.textContent = 'Adding you to the list…';
+
+    var body = new URLSearchParams({ email: email });
+
+    fetch(SIGNUP_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    }).then(function () {
+      note.textContent = "Thank you — you're on the list.";
+      emailInput.value = '';
+    }).catch(function () {
+      note.textContent = 'Something went wrong. Please try again.';
+    }).finally(function () {
+      button.disabled = false;
+    });
+  });
+
+  (function cardParallax() {
+    var card = document.querySelector('.in-card');
+    var wrap = document.querySelector('.visual');
+    if (!card || !wrap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    wrap.addEventListener('mousemove', function (e) {
+      var r = wrap.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (y * -8) + 'deg)';
+    });
+    wrap.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+    });
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'transform 300ms ease';
+  })();
+</script>
+</body>
+</html>
